@@ -275,7 +275,17 @@
 
         <!-- Customers Page -->
         <div id="customers" class="page">
-            <h2 style="font-size: 2.2em; margin-bottom: 20px;">👥 إدارة العملاء</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px;">
+                <h2 style="font-size: 2.2em; margin: 0;">👥 إدارة العملاء</h2>
+                <button onclick="addCustomer()" style="background: linear-gradient(45deg, #10B981, #059669); color: white; border: none; padding: 15px 25px; border-radius: 10px; cursor: pointer; font-size: 16px; font-weight: bold;">
+                    ➕ إضافة عميل جديد
+                </button>
+            </div>
+            
+            <!-- Search Box -->
+            <div style="margin-bottom: 20px;">
+                <input type="text" id="customerSearch" placeholder="🔍 البحث عن عميل..." onkeyup="searchCustomers()" style="width: 100%; padding: 15px; border: none; border-radius: 10px; font-size: 16px; background: rgba(255,255,255,0.9);">
+            </div>
             
             <div class="data-list">
                 <div class="data-item">
@@ -289,8 +299,13 @@
                     </div>
                     <div style="text-align: right;">
                         <span class="status status-active">✅ نشط</span>
-                        <p style="margin-top: 10px; font-weight: bold;">خطة 50 ميجا • 150₪</p>
-                        <p style="color: #666;">📶 -65 dBm (ممتاز)</p>
+                        <p style="margin: 10px 0; font-weight: bold;">خطة 50 ميجا • 150₪</p>
+                        <p style="color: #666; margin-bottom: 15px;">📶 -65 dBm (ممتاز)</p>
+                        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                            <button onclick="editCustomer(1)" style="background: #3B82F6; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">✏️ تعديل</button>
+                            <button onclick="payCustomer(1)" style="background: #10B981; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">💰 دفع</button>
+                            <button onclick="deleteCustomer(1)" style="background: #EF4444; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">🗑️ حذف</button>
+                        </div>
                     </div>
                 </div>
                 
@@ -305,8 +320,13 @@
                     </div>
                     <div style="text-align: right;">
                         <span class="status status-inactive">⚠️ متأخر</span>
-                        <p style="margin-top: 10px; font-weight: bold;">خطة 100 ميجا • 250₪</p>
-                        <p style="color: #666;">📶 -72 dBm (متوسط)</p>
+                        <p style="margin: 10px 0; font-weight: bold;">خطة 100 ميجا • 250₪</p>
+                        <p style="color: #666; margin-bottom: 15px;">📶 -72 dBm (متوسط)</p>
+                        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                            <button onclick="editCustomer(2)" style="background: #3B82F6; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">✏️ تعديل</button>
+                            <button onclick="payCustomer(2)" style="background: #F59E0B; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">⚠️ تحصيل</button>
+                            <button onclick="deleteCustomer(2)" style="background: #EF4444; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">🗑️ حذف</button>
+                        </div>
                     </div>
                 </div>
                 
@@ -321,8 +341,13 @@
                     </div>
                     <div style="text-align: right;">
                         <span class="status status-active">✅ نشط</span>
-                        <p style="margin-top: 10px; font-weight: bold;">خطة 25 ميجا • 100₪</p>
-                        <p style="color: #666;">📶 -58 dBm (ممتاز)</p>
+                        <p style="margin: 10px 0; font-weight: bold;">خطة 25 ميجا • 100₪</p>
+                        <p style="color: #666; margin-bottom: 15px;">📶 -58 dBm (ممتاز)</p>
+                        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                            <button onclick="editCustomer(3)" style="background: #3B82F6; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">✏️ تعديل</button>
+                            <button onclick="payCustomer(3)" style="background: #10B981; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">💰 دفع</button>
+                            <button onclick="deleteCustomer(3)" style="background: #EF4444; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">🗑️ حذف</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -330,7 +355,12 @@
 
         <!-- Devices Page -->
         <div id="devices" class="page">
-            <h2 style="font-size: 2.2em; margin-bottom: 20px;">🖥️ إدارة الأجهزة</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px;">
+                <h2 style="font-size: 2.2em; margin: 0;">🖥️ إدارة الأجهزة</h2>
+                <button onclick="addDevice()" style="background: linear-gradient(45deg, #3B82F6, #8B5CF6); color: white; border: none; padding: 15px 25px; border-radius: 10px; cursor: pointer; font-size: 16px; font-weight: bold;">
+                    ➕ إضافة جهاز جديد
+                </button>
+            </div>
             
             <div class="stats-grid" style="margin-bottom: 30px;">
                 <div class="stat-card">
@@ -366,7 +396,14 @@
                         </div>
                         <p style="margin-top: 5px; font-size: 0.9em; color: #666;">استخدام المعالج: 23%</p>
                     </div>
-                    <span class="status status-active">🟢 متصل</span>
+                    <div style="text-align: right;">
+                        <span class="status status-active">🟢 متصل</span>
+                        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 15px;">
+                            <button onclick="restartDevice(1)" style="background: #F59E0B; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">🔄 إعادة تشغيل</button>
+                            <button onclick="configDevice(1)" style="background: #3B82F6; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">⚙️ إعدادات</button>
+                            <button onclick="deleteDevice(1)" style="background: #EF4444; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">🗑️ حذف</button>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="data-item">
@@ -379,7 +416,14 @@
                         </div>
                         <p style="margin-top: 5px; font-size: 0.9em; color: #666;">استخدام المعالج: 67%</p>
                     </div>
-                    <span class="status status-warning">🟡 عالي</span>
+                    <div style="text-align: right;">
+                        <span class="status status-warning">🟡 عالي</span>
+                        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 15px;">
+                            <button onclick="restartDevice(2)" style="background: #F59E0B; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">🔄 إعادة تشغيل</button>
+                            <button onclick="configDevice(2)" style="background: #3B82F6; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">⚙️ إعدادات</button>
+                            <button onclick="deleteDevice(2)" style="background: #EF4444; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">🗑️ حذف</button>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="data-item">
@@ -392,14 +436,27 @@
                         </div>
                         <p style="margin-top: 5px; font-size: 0.9em; color: #666;">استخدام المعالج: 0%</p>
                     </div>
-                    <span class="status status-inactive">🔴 منقطع</span>
+                    <div style="text-align: right;">
+                        <span class="status status-inactive">🔴 منقطع</span>
+                        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 15px;">
+                            <button onclick="reconnectDevice(3)" style="background: #10B981; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">🔌 إعادة اتصال</button>
+                            <button onclick="configDevice(3)" style="background: #3B82F6; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">⚙️ إعدادات</button>
+                            <button onclick="deleteDevice(3)" style="background: #EF4444; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">🗑️ حذف</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Billing Page -->
         <div id="billing" class="page">
-            <h2 style="font-size: 2.2em; margin-bottom: 20px;">💰 الفواتير والمدفوعات</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px;">
+                <h2 style="font-size: 2.2em; margin: 0;">💰 الفواتير والمدفوعات</h2>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button onclick="generateReport()" style="background: linear-gradient(45deg, #8B5CF6, #EC4899); color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold;">📊 تقرير شامل</button>
+                    <button onclick="exportData()" style="background: linear-gradient(45deg, #10B981, #059669); color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold;">📤 تصدير البيانات</button>
+                </div>
+            </div>
             
             <div class="stats-grid" style="margin-bottom: 30px;">
                 <div class="stat-card">
@@ -444,6 +501,10 @@
                     <div style="text-align: right;">
                         <p style="font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">150₪</p>
                         <span class="status status-active">✅ مدفوع</span>
+                        <div style="display: flex; gap: 8px; justify-content: flex-end; margin-top: 10px;">
+                            <button onclick="printInvoice(1)" style="background: #3B82F6; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">🖨️ طباعة</button>
+                            <button onclick="sendReminder(1)" style="background: #F59E0B; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">📱 تذكير</button>
+                        </div>
                     </div>
                 </div>
                 
@@ -459,6 +520,10 @@
                     <div style="text-align: right;">
                         <p style="font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">250₪</p>
                         <span class="status status-inactive">⚠️ متأخر</span>
+                        <div style="display: flex; gap: 8px; justify-content: flex-end; margin-top: 10px;">
+                            <button onclick="printInvoice(2)" style="background: #3B82F6; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">🖨️ طباعة</button>
+                            <button onclick="sendReminder(2)" style="background: #EF4444; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">⚠️ تحصيل</button>
+                        </div>
                     </div>
                 </div>
                 
@@ -474,6 +539,10 @@
                     <div style="text-align: right;">
                         <p style="font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">100₪</p>
                         <span class="status status-active">✅ مدفوع</span>
+                        <div style="display: flex; gap: 8px; justify-content: flex-end; margin-top: 10px;">
+                            <button onclick="printInvoice(3)" style="background: #3B82F6; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">🖨️ طباعة</button>
+                            <button onclick="sendReminder(3)" style="background: #F59E0B; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">📱 تذكير</button>
+                        </div>
                     </div>
                 </div>
             </div>
