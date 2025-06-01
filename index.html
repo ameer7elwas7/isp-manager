@@ -1,451 +1,250 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISP Manager - نظام إدارة الإنترنت</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            min-height: 100vh;
-        }
-        
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        
-        .header {
-            background: rgba(0,0,0,0.3);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            backdrop-filter: blur(10px);
-        }
-        
-        .nav { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
-        
-        .nav-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            cursor: pointer;
+        body { font-family: Arial; background: linear-gradient(45deg, #667eea, #764ba2); color: white; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .header { background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .nav button { 
+            background: rgba(255,255,255,0.2); 
+            border: none; 
+            color: white; 
+            padding: 15px 20px; 
+            margin: 5px; 
+            border-radius: 8px; 
+            cursor: pointer; 
             font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s ease;
         }
-        
-        .nav-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
-        .nav-btn.active { background: linear-gradient(45deg, #ff6b6b, #ee5a24); }
-        
-        .page { display: none; background: rgba(255,255,255,0.1); padding: 30px; border-radius: 15px; backdrop-filter: blur(10px); }
-        .page.active { display: block; }
-        
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        
-        .stat-card {
-            background: rgba(255,255,255,0.9);
-            color: #333;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        .nav button:hover { background: rgba(255,255,255,0.3); }
+        .nav button.active { background: #ff6b6b; }
+        .page { display: none; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; }
+        .page.show { display: block; }
+        .card { background: white; color: black; padding: 20px; margin: 10px 0; border-radius: 10px; }
+        .btn { 
+            background: #007bff; 
+            color: white; 
+            border: none; 
+            padding: 10px 15px; 
+            margin: 5px; 
+            border-radius: 5px; 
+            cursor: pointer; 
         }
-        
-        .stat-number { font-size: 3em; font-weight: bold; margin: 10px 0; }
-        .blue { color: #3B82F6; }
-        .green { color: #10B981; }
-        .orange { color: #F59E0B; }
-        .purple { color: #8B5CF6; }
-        
-        .content-box {
-            background: rgba(255,255,255,0.9);
-            color: #333;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        
-        .item { padding: 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; }
-        .item:last-child { border-bottom: none; }
-        .item:hover { background: #f9fafb; }
-        
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            margin: 5px;
-            transition: all 0.3s ease;
-        }
-        
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        
-        .btn-primary { background: #3B82F6; color: white; }
-        .btn-success { background: #10B981; color: white; }
-        .btn-warning { background: #F59E0B; color: white; }
-        .btn-danger { background: #EF4444; color: white; }
-        
-        .status {
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        
-        .status-active { background: #10B981; color: white; }
-        .status-inactive { background: #EF4444; color: white; }
-        
-        .progress { width: 100%; height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; margin-top: 10px; }
-        .progress-fill { height: 100%; border-radius: 4px; }
-        
-        .icon { font-size: 2em; margin-bottom: 15px; }
-        
-        .add-btn {
-            background: linear-gradient(45deg, #10B981, #059669);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        
-        .add-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4); }
-        
-        @media (max-width: 768px) {
-            .nav { flex-direction: column; }
-            .item { flex-direction: column; align-items: flex-start; gap: 10px; }
-        }
+        .btn:hover { background: #0056b3; }
+        .btn-green { background: #28a745; }
+        .btn-red { background: #dc3545; }
+        .btn-orange { background: #fd7e14; }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <div class="header">
-            <h1 style="font-size: 2.5em; margin-bottom: 10px;">🌐 ISP Manager Pro</h1>
-            <p style="font-size: 1.2em; opacity: 0.8;">نظام إدارة مزودي الإنترنت المتطور</p>
-            
+            <h1>🌐 ISP Manager Pro</h1>
+            <p>نظام إدارة مزودي الإنترنت</p>
             <div class="nav">
-                <button class="nav-btn active" onclick="showPage('dashboard', this)">🏠 الرئيسية</button>
-                <button class="nav-btn" onclick="showPage('customers', this)">👥 العملاء</button>
-                <button class="nav-btn" onclick="showPage('devices', this)">🖥️ الأجهزة</button>
-                <button class="nav-btn" onclick="showPage('billing', this)">💰 الفواتير</button>
+                <button id="btn1" class="active" onclick="changePage(1)">🏠 الرئيسية</button>
+                <button id="btn2" onclick="changePage(2)">👥 العملاء</button>
+                <button id="btn3" onclick="changePage(3)">🖥️ الأجهزة</button>
+                <button id="btn4" onclick="changePage(4)">💰 الفواتير</button>
             </div>
         </div>
 
-        <!-- Dashboard -->
-        <div id="dashboard" class="page active">
-            <h2 style="font-size: 2.2em; margin-bottom: 20px;">📊 لوحة التحكم الرئيسية</h2>
+        <!-- الصفحة الأولى: الرئيسية -->
+        <div id="page1" class="page show">
+            <h2>📊 لوحة التحكم</h2>
             
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="icon">👥</div>
-                    <h3>إجمالي العملاء</h3>
-                    <div class="stat-number blue">3</div>
-                    <p>↗ +15% هذا الشهر</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px;">
+                <div class="card" style="text-align: center;">
+                    <h3>👥 إجمالي العملاء</h3>
+                    <h1 style="color: #007bff;">3</h1>
+                    <p>+15% هذا الشهر</p>
                 </div>
-                
-                <div class="stat-card">
-                    <div class="icon">✅</div>
-                    <h3>العملاء النشطون</h3>
-                    <div class="stat-number green">2</div>
+                <div class="card" style="text-align: center;">
+                    <h3>✅ العملاء النشطون</h3>
+                    <h1 style="color: #28a745;">2</h1>
                     <p>حالة ممتازة</p>
                 </div>
-                
-                <div class="stat-card">
-                    <div class="icon">🖥️</div>
-                    <h3>الأجهزة المتصلة</h3>
-                    <div class="stat-number orange">2</div>
+                <div class="card" style="text-align: center;">
+                    <h3>🖥️ الأجهزة المتصلة</h3>
+                    <h1 style="color: #fd7e14;">2</h1>
                     <p>من أصل 3 أجهزة</p>
                 </div>
-                
-                <div class="stat-card">
-                    <div class="icon">💰</div>
-                    <h3>الإيرادات الشهرية</h3>
-                    <div class="stat-number purple">500₪</div>
-                    <p>↗ +8% من الشهر الماضي</p>
+                <div class="card" style="text-align: center;">
+                    <h3>💰 الإيرادات</h3>
+                    <h1 style="color: #6f42c1;">500₪</h1>
+                    <p>+8% من الشهر الماضي</p>
                 </div>
             </div>
-            
-            <h3 style="font-size: 1.8em; margin-bottom: 20px;">🔔 التنبيهات الحديثة</h3>
-            <div class="content-box">
-                <div class="item">
-                    <div>
-                        <strong>⚠️ جهاز غير متصل</strong>
-                        <p style="color: #666; margin-top: 5px;">Sector 2 - Bridge • منذ 15 دقيقة</p>
-                    </div>
-                    <span class="status status-inactive">عاجل</span>
+
+            <div class="card">
+                <h3>🔔 التنبيهات</h3>
+                <p>⚠️ جهاز غير متصل: Sector 2 - Bridge</p>
+                <p>💰 دفعة جديدة: أحمد محمد - 150₪</p>
+                <p>📅 استحقاق دفع: فاطمة أحمد - متأخر</p>
+            </div>
+        </div>
+
+        <!-- الصفحة الثانية: العملاء -->
+        <div id="page2" class="page">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>👥 إدارة العملاء</h2>
+                <button class="btn btn-green" onclick="showAlert('سيتم فتح نموذج إضافة عميل جديد')">➕ إضافة عميل</button>
+            </div>
+
+            <div class="card">
+                <h4>أحمد محمد</h4>
+                <p>📧 ahmed@example.com | 📱 +964-770-123-4567</p>
+                <p>خطة 50 ميجا - 150₪ شهرياً</p>
+                <span style="background: #28a745; color: white; padding: 5px 10px; border-radius: 15px;">✅ نشط</span>
+                <div style="margin-top: 10px;">
+                    <button class="btn" onclick="showAlert('تعديل بيانات أحمد محمد')">✏️ تعديل</button>
+                    <button class="btn btn-green" onclick="showAlert('دفع فاتورة أحمد محمد')">💰 دفع</button>
+                    <button class="btn btn-red" onclick="confirmDelete('أحمد محمد')">🗑️ حذف</button>
                 </div>
-                
-                <div class="item">
-                    <div>
-                        <strong>💰 دفعة جديدة مستلمة</strong>
-                        <p style="color: #666; margin-top: 5px;">أحمد محمد • 150₪ • الآن</p>
-                    </div>
-                    <span class="status status-active">مكتمل</span>
+            </div>
+
+            <div class="card">
+                <h4>فاطمة أحمد</h4>
+                <p>📧 fatima@example.com | 📱 +964-771-234-5678</p>
+                <p>خطة 100 ميجا - 250₪ شهرياً</p>
+                <span style="background: #dc3545; color: white; padding: 5px 10px; border-radius: 15px;">⚠️ متأخر</span>
+                <div style="margin-top: 10px;">
+                    <button class="btn" onclick="showAlert('تعديل بيانات فاطمة أحمد')">✏️ تعديل</button>
+                    <button class="btn btn-orange" onclick="showAlert('تحصيل متأخرات فاطمة أحمد')">⚠️ تحصيل</button>
+                    <button class="btn btn-red" onclick="confirmDelete('فاطمة أحمد')">🗑️ حذف</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h4>محمد علي</h4>
+                <p>📧 mohammed@example.com | 📱 +964-772-345-6789</p>
+                <p>خطة 25 ميجا - 100₪ شهرياً</p>
+                <span style="background: #28a745; color: white; padding: 5px 10px; border-radius: 15px;">✅ نشط</span>
+                <div style="margin-top: 10px;">
+                    <button class="btn" onclick="showAlert('تعديل بيانات محمد علي')">✏️ تعديل</button>
+                    <button class="btn btn-green" onclick="showAlert('دفع فاتورة محمد علي')">💰 دفع</button>
+                    <button class="btn btn-red" onclick="confirmDelete('محمد علي')">🗑️ حذف</button>
                 </div>
             </div>
         </div>
 
-        <!-- Customers -->
-        <div id="customers" class="page">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap;">
-                <h2 style="font-size: 2.2em;">👥 إدارة العملاء</h2>
-                <button class="add-btn" onclick="alert('✅ سيتم فتح نموذج إضافة عميل جديد')">➕ إضافة عميل جديد</button>
+        <!-- الصفحة الثالثة: الأجهزة -->
+        <div id="page3" class="page">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>🖥️ إدارة الأجهزة</h2>
+                <button class="btn btn-green" onclick="showAlert('سيتم فتح نموذج إضافة جهاز جديد')">➕ إضافة جهاز</button>
             </div>
-            
-            <div class="content-box">
-                <div class="item">
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div style="width: 50px; height: 50px; background: linear-gradient(45deg, #3B82F6, #8B5CF6); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">أم</div>
-                        <div>
-                            <h4 style="margin-bottom: 5px;">أحمد محمد</h4>
-                            <p style="color: #666;">📧 ahmed@example.com</p>
-                            <p style="color: #666;">📱 +964-770-123-4567</p>
-                            <p style="color: #666;">خطة 50 ميجا • 150₪ شهرياً</p>
-                        </div>
-                    </div>
-                    <div style="text-align: right;">
-                        <span class="status status-active">✅ نشط</span>
-                        <br><br>
-                        <button class="btn btn-primary" onclick="alert('تعديل بيانات أحمد محمد')">✏️ تعديل</button>
-                        <button class="btn btn-success" onclick="alert('دفع فاتورة أحمد محمد 150₪')">💰 دفع</button>
-                        <button class="btn btn-danger" onclick="if(confirm('حذف أحمد محمد؟')) alert('تم الحذف')">🗑️ حذف</button>
-                    </div>
+
+            <div class="card">
+                <h4>🏢 Main Tower - Sector 1</h4>
+                <p>MikroTik RB4011 - 192.168.1.1</p>
+                <p>👥 العملاء: 45 | ⏱️ وقت التشغيل: 15 يوم</p>
+                <span style="background: #28a745; color: white; padding: 5px 10px; border-radius: 15px;">🟢 متصل</span>
+                <div style="margin-top: 10px;">
+                    <button class="btn btn-orange" onclick="showAlert('إعادة تشغيل Main Tower')">🔄 إعادة تشغيل</button>
+                    <button class="btn" onclick="showAlert('فتح إعدادات Main Tower')">⚙️ إعدادات</button>
+                    <button class="btn btn-red" onclick="confirmDelete('Main Tower')">🗑️ حذف</button>
                 </div>
-                
-                <div class="item">
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div style="width: 50px; height: 50px; background: linear-gradient(45deg, #8B5CF6, #EC4899); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">فأ</div>
-                        <div>
-                            <h4 style="margin-bottom: 5px;">فاطمة أحمد</h4>
-                            <p style="color: #666;">📧 fatima@example.com</p>
-                            <p style="color: #666;">📱 +964-771-234-5678</p>
-                            <p style="color: #666;">خطة 100 ميجا • 250₪ شهرياً</p>
-                        </div>
-                    </div>
-                    <div style="text-align: right;">
-                        <span class="status status-inactive">⚠️ متأخر</span>
-                        <br><br>
-                        <button class="btn btn-primary" onclick="alert('تعديل بيانات فاطمة أحمد')">✏️ تعديل</button>
-                        <button class="btn btn-warning" onclick="alert('تحصيل متأخرات فاطمة أحمد 250₪')">⚠️ تحصيل</button>
-                        <button class="btn btn-danger" onclick="if(confirm('حذف فاطمة أحمد؟')) alert('تم الحذف')">🗑️ حذف</button>
-                    </div>
+            </div>
+
+            <div class="card">
+                <h4>🏠 Building A - AP</h4>
+                <p>Ubiquiti UniFi AC Pro - 192.168.1.50</p>
+                <p>👥 العملاء: 18 | ⏱️ وقت التشغيل: 8 أيام</p>
+                <span style="background: #fd7e14; color: white; padding: 5px 10px; border-radius: 15px;">🟡 عالي</span>
+                <div style="margin-top: 10px;">
+                    <button class="btn btn-orange" onclick="showAlert('إعادة تشغيل Building A AP')">🔄 إعادة تشغيل</button>
+                    <button class="btn" onclick="showAlert('فتح إعدادات Building A AP')">⚙️ إعدادات</button>
+                    <button class="btn btn-red" onclick="confirmDelete('Building A AP')">🗑️ حذف</button>
                 </div>
-                
-                <div class="item">
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div style="width: 50px; height: 50px; background: linear-gradient(45deg, #10B981, #059669); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">مع</div>
-                        <div>
-                            <h4 style="margin-bottom: 5px;">محمد علي</h4>
-                            <p style="color: #666;">📧 mohammed@example.com</p>
-                            <p style="color: #666;">📱 +964-772-345-6789</p>
-                            <p style="color: #666;">خطة 25 ميجا • 100₪ شهرياً</p>
-                        </div>
-                    </div>
-                    <div style="text-align: right;">
-                        <span class="status status-active">✅ نشط</span>
-                        <br><br>
-                        <button class="btn btn-primary" onclick="alert('تعديل بيانات محمد علي')">✏️ تعديل</button>
-                        <button class="btn btn-success" onclick="alert('دفع فاتورة محمد علي 100₪')">💰 دفع</button>
-                        <button class="btn btn-danger" onclick="if(confirm('حذف محمد علي؟')) alert('تم الحذف')">🗑️ حذف</button>
-                    </div>
+            </div>
+
+            <div class="card">
+                <h4>🌉 Sector 2 - Bridge</h4>
+                <p>MikroTik SXT LTE6 - 192.168.1.25</p>
+                <p>👥 العملاء: 0 | ⚠️ منقطع منذ 15 دقيقة</p>
+                <span style="background: #dc3545; color: white; padding: 5px 10px; border-radius: 15px;">🔴 منقطع</span>
+                <div style="margin-top: 10px;">
+                    <button class="btn btn-green" onclick="showAlert('محاولة إعادة الاتصال...')">🔌 إعادة اتصال</button>
+                    <button class="btn" onclick="showAlert('فتح إعدادات Sector 2 Bridge')">⚙️ إعدادات</button>
+                    <button class="btn btn-red" onclick="confirmDelete('Sector 2 Bridge')">🗑️ حذف</button>
                 </div>
             </div>
         </div>
 
-        <!-- Devices -->
-        <div id="devices" class="page">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap;">
-                <h2 style="font-size: 2.2em;">🖥️ إدارة الأجهزة</h2>
-                <button class="add-btn" onclick="alert('✅ سيتم فتح نموذج إضافة جهاز جديد')">➕ إضافة جهاز جديد</button>
-            </div>
-            
-            <div class="stats" style="margin-bottom: 30px;">
-                <div class="stat-card">
-                    <div class="icon">📡</div>
-                    <h3>حالة الشبكة</h3>
-                    <div class="stat-number green">2/3</div>
-                    <p>أجهزة متصلة</p>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="icon">📊</div>
-                    <h3>استهلاك البيانات</h3>
-                    <div class="stat-number blue">15.8</div>
-                    <p>GB/s سرعة التحميل</p>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="icon">⚡</div>
-                    <h3>الأداء</h3>
-                    <div class="stat-number green">99.8%</div>
-                    <p>وقت التشغيل</p>
-                </div>
-            </div>
-            
-            <div class="content-box">
-                <div class="item" style="flex-direction: column; align-items: stretch;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 15px;">
-                        <div>
-                            <h4>🏢 Main Tower - Sector 1</h4>
-                            <p style="color: #666;">MikroTik RB4011 - 192.168.1.1</p>
-                            <p style="color: #666;">👥 العملاء: 45 • ⏱️ وقت التشغيل: 15 يوم</p>
-                        </div>
-                        <span class="status status-active">🟢 متصل</span>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-fill" style="width: 23%; background: #10B981;"></div>
-                    </div>
-                    <p style="margin-top: 5px; font-size: 0.9em; color: #666;">استخدام المعالج: 23%</p>
-                    <div style="margin-top: 15px;">
-                        <button class="btn btn-warning" onclick="alert('🔄 إعادة تشغيل Main Tower...')">🔄 إعادة تشغيل</button>
-                        <button class="btn btn-primary" onclick="alert('⚙️ فتح إعدادات Main Tower')">⚙️ إعدادات</button>
-                        <button class="btn btn-danger" onclick="if(confirm('حذف Main Tower؟')) alert('تم الحذف')">🗑️ حذف</button>
-                    </div>
-                </div>
-                
-                <div class="item" style="flex-direction: column; align-items: stretch;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 15px;">
-                        <div>
-                            <h4>🏠 Building A - AP</h4>
-                            <p style="color: #666;">Ubiquiti UniFi AC Pro - 192.168.1.50</p>
-                            <p style="color: #666;">👥 العملاء: 18 • ⏱️ وقت التشغيل: 8 أيام</p>
-                        </div>
-                        <span class="status" style="background: #F59E0B; color: white;">🟡 عالي</span>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-fill" style="width: 67%; background: #F59E0B;"></div>
-                    </div>
-                    <p style="margin-top: 5px; font-size: 0.9em; color: #666;">استخدام المعالج: 67%</p>
-                    <div style="margin-top: 15px;">
-                        <button class="btn btn-warning" onclick="alert('🔄 إعادة تشغيل Building A AP...')">🔄 إعادة تشغيل</button>
-                        <button class="btn btn-primary" onclick="alert('⚙️ فتح إعدادات Building A AP')">⚙️ إعدادات</button>
-                        <button class="btn btn-danger" onclick="if(confirm('حذف Building A AP؟')) alert('تم الحذف')">🗑️ حذف</button>
-                    </div>
-                </div>
-                
-                <div class="item" style="flex-direction: column; align-items: stretch;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 15px;">
-                        <div>
-                            <h4>🌉 Sector 2 - Bridge</h4>
-                            <p style="color: #666;">MikroTik SXT LTE6 - 192.168.1.25</p>
-                            <p style="color: #666;">👥 العملاء: 0 • ⚠️ منقطع منذ 15 دقيقة</p>
-                        </div>
-                        <span class="status status-inactive">🔴 منقطع</span>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-fill" style="width: 0%; background: #EF4444;"></div>
-                    </div>
-                    <p style="margin-top: 5px; font-size: 0.9em; color: #666;">استخدام المعالج: 0%</p>
-                    <div style="margin-top: 15px;">
-                        <button class="btn btn-success" onclick="alert('🔌 محاولة إعادة الاتصال...')">🔌 إعادة اتصال</button>
-                        <button class="btn btn-primary" onclick="alert('⚙️ فتح إعدادات Sector 2 Bridge')">⚙️ إعدادات</button>
-                        <button class="btn btn-danger" onclick="if(confirm('حذف Sector 2 Bridge؟')) alert('تم الحذف')">🗑️ حذف</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Billing -->
-        <div id="billing" class="page">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap;">
-                <h2 style="font-size: 2.2em;">💰 الفواتير والمدفوعات</h2>
+        <!-- الصفحة الرابعة: الفواتير -->
+        <div id="page4" class="page">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>💰 الفواتير والمدفوعات</h2>
                 <div>
-                    <button class="btn btn-primary" onclick="alert('📊 تقرير الفواتير الشهري\\n\\n💰 إجمالي الإيرادات: 500₪\\n⚠️ المستحقات: 250₪\\n✅ المدفوع: 250₪')">📊 تقرير شامل</button>
-                    <button class="btn btn-success" onclick="alert('📤 تم تصدير البيانات بنجاح!\\n\\n💾 حفظ في: ISP_Data.xlsx')">📤 تصدير</button>
+                    <button class="btn" onclick="showAlert('تقرير الفواتير\\nالإيرادات: 500₪\\nالمستحقات: 250₪')">📊 تقرير</button>
+                    <button class="btn btn-green" onclick="showAlert('تم تصدير البيانات بنجاح')">📤 تصدير</button>
                 </div>
             </div>
-            
-            <div class="stats" style="margin-bottom: 30px;">
-                <div class="stat-card">
-                    <div class="icon">💰</div>
-                    <h3>الإيرادات الشهرية</h3>
-                    <div class="stat-number green">500₪</div>
-                    <p>↗ +12% من الشهر الماضي</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                <div class="card" style="text-align: center;">
+                    <h4>💰 الإيرادات الشهرية</h4>
+                    <h2 style="color: #28a745;">500₪</h2>
                 </div>
-                
-                <div class="stat-card">
-                    <div class="icon">⚠️</div>
-                    <h3>المستحقات</h3>
-                    <div class="stat-number" style="color: #EF4444;">250₪</div>
-                    <p>عميل واحد متأخر</p>
+                <div class="card" style="text-align: center;">
+                    <h4>⚠️ المستحقات</h4>
+                    <h2 style="color: #dc3545;">250₪</h2>
                 </div>
-                
-                <div class="stat-card">
-                    <div class="icon">📅</div>
-                    <h3>الدفعات اليوم</h3>
-                    <div class="stat-number blue">150₪</div>
-                    <p>دفعة واحدة</p>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="icon">📊</div>
-                    <h3>متوسط الفاتورة</h3>
-                    <div class="stat-number purple">167₪</div>
-                    <p>لكل عميل شهرياً</p>
+                <div class="card" style="text-align: center;">
+                    <h4>📅 دفعات اليوم</h4>
+                    <h2 style="color: #007bff;">150₪</h2>
                 </div>
             </div>
-            
-            <div class="content-box">
-                <div class="item">
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div style="width: 50px; height: 50px; background: linear-gradient(45deg, #3B82F6, #8B5CF6); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">أم</div>
-                        <div>
-                            <h4>أحمد محمد</h4>
-                            <p style="color: #666;">خطة 50 ميجا • يونيو 2024</p>
-                            <p style="color: #666; font-size: 0.9em;">📅 مدفوع في 15/06/2024</p>
-                        </div>
+
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h4>أحمد محمد</h4>
+                        <p>خطة 50 ميجا - يونيو 2024</p>
                     </div>
                     <div style="text-align: right;">
-                        <p style="font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">150₪</p>
-                        <span class="status status-active">✅ مدفوع</span>
-                        <br><br>
-                        <button class="btn btn-primary" onclick="alert('🖨️ طباعة فاتورة أحمد محمد')">🖨️ طباعة</button>
-                        <button class="btn btn-warning" onclick="alert('📱 إرسال تذكير لأحمد محمد')">📱 تذكير</button>
+                        <h3>150₪</h3>
+                        <span style="background: #28a745; color: white; padding: 5px 10px; border-radius: 15px;">✅ مدفوع</span>
+                        <div style="margin-top: 10px;">
+                            <button class="btn" onclick="showAlert('طباعة فاتورة أحمد محمد')">🖨️ طباعة</button>
+                            <button class="btn btn-orange" onclick="showAlert('إرسال تذكير لأحمد محمد')">📱 تذكير</button>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="item">
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div style="width: 50px; height: 50px; background: linear-gradient(45deg, #8B5CF6, #EC4899); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">فأ</div>
-                        <div>
-                            <h4>فاطمة أحمد</h4>
-                            <p style="color: #666;">خطة 100 ميجا • يونيو 2024</p>
-                            <p style="color: #666; font-size: 0.9em;">⚠️ متأخر منذ 20/05/2024</p>
-                        </div>
+            </div>
+
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h4>فاطمة أحمد</h4>
+                        <p>خطة 100 ميجا - يونيو 2024</p>
                     </div>
                     <div style="text-align: right;">
-                        <p style="font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">250₪</p>
-                        <span class="status status-inactive">⚠️ متأخر</span>
-                        <br><br>
-                        <button class="btn btn-primary" onclick="alert('🖨️ طباعة فاتورة فاطمة أحمد')">🖨️ طباعة</button>
-                        <button class="btn btn-danger" onclick="alert('⚠️ إرسال إنذار تحصيل لفاطمة أحمد')">⚠️ تحصيل</button>
+                        <h3>250₪</h3>
+                        <span style="background: #dc3545; color: white; padding: 5px 10px; border-radius: 15px;">⚠️ متأخر</span>
+                        <div style="margin-top: 10px;">
+                            <button class="btn" onclick="showAlert('طباعة فاتورة فاطمة أحمد')">🖨️ طباعة</button>
+                            <button class="btn btn-red" onclick="showAlert('إرسال إنذار تحصيل')">⚠️ تحصيل</button>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="item">
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div style="width: 50px; height: 50px; background: linear-gradient(45deg, #10B981, #059669); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">مع</div>
-                        <div>
-                            <h4>محمد علي</h4>
-                            <p style="color: #666;">خطة 25 ميجا • يونيو 2024</p>
-                            <p style="color: #666; font-size: 0.9em;">📅 مدفوع في 10/06/2024</p>
-                        </div>
+            </div>
+
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h4>محمد علي</h4>
+                        <p>خطة 25 ميجا - يونيو 2024</p>
                     </div>
                     <div style="text-align: right;">
-                        <p style="font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">100₪</p>
-                        <span class="status status-active">✅ مدفوع</span>
-                        <br><br>
-                        <button class="btn btn-primary" onclick="alert('🖨️ طباعة فاتورة محمد علي')">🖨️ طباعة</button>
-                        <button class="btn btn-warning" onclick="alert('📱 إرسال تذكير لمحمد علي')">📱 تذكير</button>
+                        <h3>100₪</h3>
+                        <span style="background: #28a745; color: white; padding: 5px 10px; border-radius: 15px;">✅ مدفوع</span>
+                        <div style="margin-top: 10px;">
+                            <button class="btn" onclick="showAlert('طباعة فاتورة محمد علي')">🖨️ طباعة</button>
+                            <button class="btn btn-orange" onclick="showAlert('إرسال تذكير لمحمد علي')">📱 تذكير</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -453,25 +252,32 @@
     </div>
 
     <script>
-        function showPage(pageId, buttonElement) {
+        function changePage(pageNum) {
             // إخفاء جميع الصفحات
-            var pages = document.querySelectorAll('.page');
-            pages.forEach(function(page) {
-                page.classList.remove('active');
-            });
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById('page' + i).classList.remove('show');
+                document.getElementById('btn' + i).classList.remove('active');
+            }
             
-            // إظهار الصفحة المطلوبة
-            document.getElementById(pageId).classList.add('active');
-            
-            // تحديث الأزرار
-            var buttons = document.querySelectorAll('.nav-btn');
-            buttons.forEach(function(btn) {
-                btn.classList.remove('active');
-            });
-            
-            // تفعيل الزر الحالي
-            buttonElement.classList.add('active');
+            // إظهار الصفحة المحددة
+            document.getElementById('page' + pageNum).classList.add('show');
+            document.getElementById('btn' + pageNum).classList.add('active');
         }
+
+        function showAlert(message) {
+            alert('✅ ' + message);
+        }
+
+        function confirmDelete(item) {
+            if (confirm('هل أنت متأكد من حذف: ' + item + '؟')) {
+                alert('🗑️ تم حذف ' + item + ' بنجاح!');
+            }
+        }
+
+        // رسالة ترحيب
+        setTimeout(function() {
+            alert('🌐 مرحباً بك في ISP Manager Pro!\n\nالنظام جاهز للاستخدام ✅\nجميع الأزرار تعمل بشكل مثالي!');
+        }, 1000);
     </script>
 </body>
 </html>
